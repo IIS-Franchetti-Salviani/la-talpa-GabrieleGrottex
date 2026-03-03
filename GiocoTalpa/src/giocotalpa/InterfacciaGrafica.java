@@ -4,6 +4,9 @@
  */
 package giocotalpa;
 
+import javax.swing.*;
+import java.awt.*;
+import java.util.Random;
 /**
  *
  * @author grott
@@ -11,12 +14,19 @@ package giocotalpa;
 public class InterfacciaGrafica extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(InterfacciaGrafica.class.getName());
-
+    private JButton[] buche = new JButton[8];
+    private boolean[] talpaPresente = new boolean[8];
+    private int punteggio = 0;
+    private boolean giocoAttivo = true;
+    private Random random = new Random();
     /**
      * Creates new form InterfacciaGrafica
      */
     public InterfacciaGrafica() {
         initComponents();
+        setSize(600, 400);  
+        creaBuche();
+        avviaThreadTalpe();
     }
 
     /**
@@ -44,6 +54,74 @@ public class InterfacciaGrafica extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void creaBuche() {
+        setLayout(new GridLayout(2, 4));
+
+        for (int i = 0; i < 8; i++) {
+            int index = i;
+
+            buche[i] = new JButton("VUOTA");
+            talpaPresente[i] = false;
+
+            buche[i].addActionListener(e -> colpisciBuca(index));
+
+            add(buche[i]);
+        }
+    }
+
+    private synchronized void colpisciBuca(int index) {
+
+        if (talpaPresente[index]) {
+            punteggio += 10;
+            buche[index].setText("COLPITA!");
+            talpaPresente[index] = false;
+        } else {
+            punteggio -= 5;
+        }
+
+        setTitle("Punteggio: " + punteggio);
+    }
+
+    private void avviaThreadTalpe() {
+
+        Thread generatore = new Thread(() -> {
+
+            while (giocoAttivo) {
+
+                int index = random.nextInt(8);
+
+                if (!talpaPresente[index]) {
+
+                    talpaPresente[index] = true;
+
+                    SwingUtilities.invokeLater(() ->
+                            buche[index].setText("TALPA!")
+                    );
+
+                    new Thread(() -> {
+                        try {
+                            Thread.sleep(2000); // tempo visibile
+                        } catch (InterruptedException e) {
+                        }
+
+                        synchronized (InterfacciaGrafica.this) {
+                            talpaPresente[index] = false;
+                            SwingUtilities.invokeLater(() ->
+                                    buche[index].setText("VUOTA")
+                            );
+                        }
+                    }).start();
+                }
+
+                try {
+                    Thread.sleep(1000); // tempo tra una talpa e l'altra
+                } catch (InterruptedException e) {
+                }
+            }
+        });
+
+        generatore.start();
+    }
     /**
      * @param args the command line arguments
      */
