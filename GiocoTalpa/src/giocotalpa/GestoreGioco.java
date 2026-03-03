@@ -39,7 +39,6 @@ public class GestoreGioco {
                     b.mostraTalpa(t);
                     gui.aggiornaBuca(b);
 
-                    // Thread per nascondere la talpa dopo il tempo
                     new Thread(() -> {
                         try{
                             Thread.sleep(t.getTempoVisibile());
@@ -50,7 +49,7 @@ public class GestoreGioco {
                 }
 
                 try{
-                    Thread.sleep(1000); // tempo tra una talpa e l'altra
+                    Thread.sleep(1000); 
                 }catch(InterruptedException e){}
             }
         });
