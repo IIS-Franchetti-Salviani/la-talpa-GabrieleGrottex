@@ -12,20 +12,20 @@ public class Giocatore {
     private String nome;
     private int punteggio;
 
-    public Giocatore(String nome){
+    public Giocatore(String nome) {
         this.nome = nome;
         this.punteggio = 0;
     }
 
-    public void aggiungiPunti(int punti){
+    public void aggiungiPunti(int punti) {
         punteggio += punti;
     }
 
-    public int getPunteggio(){
+    public int getPunteggio() {
         return punteggio;
     }
 
-    public String getNome(){
+    public String getNome() {
         return nome;
     }
 }

@@ -18,53 +18,53 @@ public class GestoreGioco {
     private boolean attivo = true;
     private Random random = new Random();
 
-    public GestoreGioco(InterfacciaGrafica gui){
+    public GestoreGioco(InterfacciaGrafica gui) {
         this.gui = gui;
-        this.giocatore = new Giocatore("Gabriele");
+        giocatore = new Giocatore("Gabriele");
         buche = new Buca[8];
-        for(int i=0; i<8; i++){
+        for(int i=0;i<8;i++)
             buche[i] = new Buca(i);
-        }
     }
-    
-    public void avviaGioco(){
+
+    public void avviaGioco() {
 
         Thread generatore = new Thread(() -> {
-            while(attivo){
+            while(attivo) {
                 int index = random.nextInt(8);
                 Buca b = buche[index];
 
-                if(!b.eOccupata()){
-                    Talpa t = new Talpa("normale", 10, 2000);
+                if(!b.eOccupata()) {
+                    Talpa t = new Talpa("Standard", 10, 2000);
                     b.mostraTalpa(t);
                     gui.aggiornaBuca(b);
 
+                    // Thread per far scomparire la talpa
                     new Thread(() -> {
-                        try{
+                        try {
                             Thread.sleep(t.getTempoVisibile());
-                        }catch(InterruptedException e){}
+                        } catch(InterruptedException e) {}
                         b.nascondiTalpa();
                         gui.aggiornaBuca(b);
                     }).start();
                 }
 
-                try{
-                    Thread.sleep(1000); 
-                }catch(InterruptedException e){}
+                try {
+                    Thread.sleep(1000);
+                } catch(InterruptedException e) {}
             }
         });
 
         generatore.start();
     }
 
-    public void gestisciClick(int idBuca){
+    public void gestisciClick(int idBuca) {
         int punti = buche[idBuca].colpisci();
         giocatore.aggiungiPunti(punti);
         gui.mostraPunteggio(giocatore.getPunteggio());
         gui.aggiornaBuca(buche[idBuca]);
     }
 
-    public Giocatore getGiocatore(){
+    public Giocatore getGiocatore() {
         return giocatore;
     }
 }

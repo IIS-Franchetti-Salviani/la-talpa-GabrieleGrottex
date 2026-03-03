@@ -4,33 +4,27 @@
  */
 package giocotalpa;
 
-import javax.swing.SwingUtilities;
-import javax.swing.JButton;
+import javax.swing.*;
+
 /**
  *
  * @author grott
  */
 public class InterfacciaGrafica extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(InterfacciaGrafica.class.getName());
-
-    private javax.swing.JButton[] bottoni;
+    private JButton[] bottoni;
     private GestoreGioco gestore;
 
     /**
      * Creates new form InterfacciaGrafica
      */
-    public InterfacciaGrafica() {
-        initComponents(); // rimane quello generato
-    // qui sotto metti solo il tuo codice extra
-    bottoni = new javax.swing.JButton[]{jButton1,jButton2,jButton3,jButton4,jButton5,jButton6,jButton7,jButton8};
-    gestore = new GestoreGioco(this);
-    gestore.avviaGioco();
-               
+     public InterfacciaGrafica() {
+        initComponents();
 
-        for(int i=0;i<8;i++){
-            bottoni[i].setText("VUOTA");
-        }
+        bottoni = new JButton[]{
+            jButton1,jButton2,jButton3,jButton4,
+            jButton5,jButton6,jButton7,jButton8
+        };
 
         gestore = new GestoreGioco(this);
         gestore.avviaGioco();
@@ -44,13 +38,13 @@ public class InterfacciaGrafica extends javax.swing.JFrame {
                 bottoni[b.getId()].setText("VUOTA");
         });
     }
-     
+
     public void mostraPunteggio(int punti){
         SwingUtilities.invokeLater(() ->
             setTitle("Punteggio: " + punti)
         );
     }
-}
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -238,9 +232,11 @@ public class InterfacciaGrafica extends javax.swing.JFrame {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        SwingUtilities.invokeLater(() -> {
+            InterfacciaGrafica gui = new InterfacciaGrafica();
+            gui.setVisible(true);
+        });
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new InterfacciaGrafica().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -253,4 +249,5 @@ public class InterfacciaGrafica extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     // End of variables declaration//GEN-END:variables
+
 }

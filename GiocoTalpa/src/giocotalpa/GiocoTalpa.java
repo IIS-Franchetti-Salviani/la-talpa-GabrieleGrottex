@@ -14,7 +14,9 @@ public class GiocoTalpa {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-    }
-    
+            InterfacciaGrafica gui = new InterfacciaGrafica();
+            gui.setVisible(true);
+        }
 }
+    
+

@@ -9,7 +9,7 @@ package giocotalpa;
  * @author grottelli.gabriele
  */
 public class Talpa {
-    private String tipo;
+     private String tipo;
     private int punteggio;
     private int tempoVisibile;
     private boolean attiva;

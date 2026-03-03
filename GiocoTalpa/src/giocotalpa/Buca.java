@@ -15,7 +15,7 @@ public class Buca {
 
     public Buca(int id) {
         this.id = id;
-        this.occupata = false;
+        occupata = false;
     }
 
     public synchronized void mostraTalpa(Talpa t) {
@@ -25,20 +25,19 @@ public class Buca {
     }
 
     public synchronized void nascondiTalpa() {
-        if(talpaCorrente != null){
+        if(talpaCorrente != null)
             talpaCorrente.scompare();
-        }
         occupata = false;
         talpaCorrente = null;
     }
 
     public synchronized int colpisci() {
-        if(occupata && talpaCorrente.eAttiva()){
+        if(occupata && talpaCorrente.eAttiva()) {
             int punti = talpaCorrente.getPunteggio();
             nascondiTalpa();
             return punti;
         }
-        return -5; 
+        return -5; // penalità se buca vuota
     }
 
     public boolean eOccupata() {
