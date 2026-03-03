@@ -38,7 +38,7 @@ public class Buca {
             nascondiTalpa();
             return punti;
         }
-        return -5; // penalità se colpisci buca vuota
+        return -5; 
     }
 
     public boolean eOccupata() {

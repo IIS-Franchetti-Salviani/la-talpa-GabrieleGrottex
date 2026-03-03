@@ -26,4 +26,46 @@ public class GestoreGioco {
             buche[i] = new Buca(i);
         }
     }
+    
+    public void avviaGioco(){
+
+        Thread generatore = new Thread(() -> {
+            while(attivo){
+                int index = random.nextInt(8);
+                Buca b = buche[index];
+
+                if(!b.eOccupata()){
+                    Talpa t = new Talpa("normale", 10, 2000);
+                    b.mostraTalpa(t);
+                    gui.aggiornaBuca(b);
+
+                    // Thread per nascondere la talpa dopo il tempo
+                    new Thread(() -> {
+                        try{
+                            Thread.sleep(t.getTempoVisibile());
+                        }catch(InterruptedException e){}
+                        b.nascondiTalpa();
+                        gui.aggiornaBuca(b);
+                    }).start();
+                }
+
+                try{
+                    Thread.sleep(1000); // tempo tra una talpa e l'altra
+                }catch(InterruptedException e){}
+            }
+        });
+
+        generatore.start();
+    }
+
+    public void gestisciClick(int idBuca){
+        int punti = buche[idBuca].colpisci();
+        giocatore.aggiungiPunti(punti);
+        gui.mostraPunteggio(giocatore.getPunteggio());
+        gui.aggiornaBuca(buche[idBuca]);
+    }
+
+    public Giocatore getGiocatore(){
+        return giocatore;
+    }
 }
