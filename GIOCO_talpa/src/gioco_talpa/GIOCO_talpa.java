@@ -4,6 +4,7 @@
  */
 package gioco_talpa;
 
+import javax.swing.SwingUtilities;
 /**
  *
  * @author grottelli.gabriele
@@ -14,7 +15,14 @@ public class GIOCO_talpa {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+       
+        SwingUtilities.invokeLater(() -> {
+            
+            graficaTalpa finestra = new graficaTalpa();
+            
+            finestra.setVisible(true);
+            
+            finestra.setLocationRelativeTo(null);
+        });
     }
-    
 }
