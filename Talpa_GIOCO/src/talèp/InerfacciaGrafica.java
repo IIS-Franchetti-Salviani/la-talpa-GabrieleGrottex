@@ -13,44 +13,53 @@ import java.awt.Color;
 public class InerfacciaGrafica extends javax.swing.JFrame {
     private GestoreGioco gestore;
     private JButton[] listaBottoni;
-    
-    /**
-     * Creates new form InerfacciaGrafica
-     */
-    
+    private JButton btnStart; // Il nuovo tasto Start
 
     public InerfacciaGrafica() {
-        initComponents(); // Questo è il metodo generato da NetBeans
-        
-        // 2. INIZIALIZZA IL GESTORE E L'ARRAY
+        initComponents();
         gestore = new GestoreGioco(8);
         listaBottoni = new JButton[]{jButton1, jButton2, jButton3, jButton4, jButton5, jButton6, jButton7, jButton8};
         
-        // 3. AVVIA I THREAD
-        avviaPartita();
+        // Configurazione iniziale bottoni
+        for(JButton b : listaBottoni) b.setEnabled(false);
+        
+        // Mostra subito le istruzioni
+        mostraIstruzioni();
     }
 
-    private void avviaPartita() {
-        // Thread del Tempo
+    private void mostraIstruzioni() {
+        JOptionPane.showMessageDialog(this, 
+            "REGOLE DEL GIOCO:\n" +
+            "1. Premi START per iniziare.\n" +
+            "2. Colpisci la TALPA (+10 punti).\n" +
+            "3. Click a vuoto: -5 punti e -2 secondi!\n" +
+            "4. Hai 30 secondi di tempo.", 
+            "Istruzioni", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    // Questo metodo va collegato al tasto Start (jButton9 o uno nuovo)
+    private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {
+        gestore.resettaGioco();
+        btnStart.setEnabled(false); // Disabilita start durante il gioco
+        
+        for(JButton b : listaBottoni) b.setEnabled(true);
+        
         gestore.avviaTimer(this::aggiornaLabels, () -> {
             aggiornaLabels();
-            JOptionPane.showMessageDialog(this, "Fine! Punti: " + gestore.getPunteggio());
+            for(JButton b : listaBottoni) b.setEnabled(false);
+            JOptionPane.showMessageDialog(this, "Fine! Punteggio finale: " + gestore.getPunteggio());
+            btnStart.setEnabled(true);
+            btnStart.setText("Riprova");
         });
 
-        // Thread delle Talpe
         gestore.avviaMovimentoTalpe(this::aggiornaBottoni);
     }
 
     private void aggiornaLabels() {
-        Punteggio.setText(String.valueOf(gestore.getPunteggio()));
-        Tempo.setText(String.valueOf(gestore.getTempoResiduo()));
-    
-        // Se vuoi un tocco di classe: se il tempo è sotto i 5 secondi diventa rosso
-        if (gestore.getTempoResiduo() <= 5) {
-            Tempo.setForeground(java.awt.Color.RED);
-        } else {
-            Tempo.setForeground(java.awt.Color.BLACK);
-        }
+        Punteggio.setText("Punti: " + gestore.getPunteggio());
+        Tempo.setText("Tempo: " + gestore.getTempoResiduo() + "s");
+        if (gestore.getTempoResiduo() <= 5) Tempo.setForeground(Color.RED);
+        else Tempo.setForeground(Color.BLACK);
     }
 
     private void aggiornaBottoni() {
@@ -62,6 +71,15 @@ public class InerfacciaGrafica extends javax.swing.JFrame {
                 listaBottoni[i].setText("Buca");
                 listaBottoni[i].setBackground(null);
             }
+        }
+    }
+
+    // Esempio di gestione click su una buca (ripetere per tutti i jButton)
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+        if(gestore.isInCorso()) {
+            gestore.colpisceBuca(0);
+            aggiornaLabels();
+            aggiornaBottoni();
         }
     }
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(InerfacciaGrafica.class.getName());

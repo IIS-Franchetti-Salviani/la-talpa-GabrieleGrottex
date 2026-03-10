@@ -10,18 +10,11 @@ package talèp;
  */
 public class Talpa {
     private int punti;
-    private int durataVisibilita; // Millisec che rimane fuori
-
-    public Talpa(int punti, int durata) {
-        this.punti = punti;
-        this.durataVisibilita = durata;
+    public Talpa(int punti) { 
+        this.punti = punti; 
     }
-
-    public int getPunti() { 
+    public int getPunti() {
         return punti; 
-    }
-    public int getDurata() {
-        return durataVisibilita;
     }
 }
 

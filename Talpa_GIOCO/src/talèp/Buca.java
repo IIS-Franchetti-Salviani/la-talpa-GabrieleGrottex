@@ -9,23 +9,22 @@ package talèp;
  * @author grottelli.gabriele
  */
 public class Buca {
+    
     private Talpa talpaContenuta = null;
-    private boolean occupata = false;
-
-    public void setTalpa(Talpa t) {
-        this.talpaContenuta = t;
-        this.occupata = (t != null);
-    }
-
-    public boolean isOccupata() {
-        return occupata;
-    }
-    public Talpa getTalpa() {
-        return talpaContenuta;
+    
+    public void setTalpa(Talpa t) { 
+        this.talpaContenuta = t; 
     }
     
-    public void svuota() {
+    public boolean isOccupata() { 
+        return talpaContenuta != null;
+    }
+    
+    public Talpa getTalpa() { 
+        return talpaContenuta; 
+    }
+    
+    public void svuota() { 
         talpaContenuta = null;
-        occupata = false;
     }
 }
