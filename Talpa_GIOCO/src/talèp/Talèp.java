@@ -4,6 +4,7 @@
  */
 package talèp;
 
+import javax.swing.SwingUtilities;
 /**
  *
  * @author grottelli.gabriele
@@ -14,7 +15,16 @@ public class Talèp {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+       
+        SwingUtilities.invokeLater(() -> {
+            
+            InerfacciaGrafica gioco = new InerfacciaGrafica();
+            
+            gioco.setVisible(true);
+            
+            gioco.setLocationRelativeTo(null);
+        });
     }
-    
 }
+    
+
