@@ -101,7 +101,6 @@ public class InerfacciaGrafica extends javax.swing.JFrame {
         Punteggio = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        Instruzioni = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -179,13 +178,6 @@ public class InerfacciaGrafica extends javax.swing.JFrame {
 
         jLabel2.setText("Tempo");
 
-        Instruzioni.setText("jButton9");
-        Instruzioni.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                InstruzioniActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -215,17 +207,12 @@ public class InerfacciaGrafica extends javax.swing.JFrame {
                 .addComponent(Punteggio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Instruzioni))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(68, 68, 68)
-                        .addComponent(jButton1)
-                        .addGap(223, 223, 223)
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 237, Short.MAX_VALUE)
-                        .addComponent(jButton3)))
+                .addGap(68, 68, 68)
+                .addComponent(jButton1)
+                .addGap(223, 223, 223)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 237, Short.MAX_VALUE)
+                .addComponent(jButton3)
                 .addGap(92, 92, 92))
         );
         layout.setVerticalGroup(
@@ -259,9 +246,7 @@ public class InerfacciaGrafica extends javax.swing.JFrame {
                     .addComponent(jButton6)
                     .addComponent(jButton7)
                     .addComponent(jButton8))
-                .addGap(119, 119, 119)
-                .addComponent(Instruzioni)
-                .addGap(60, 60, 60))
+                .addGap(202, 202, 202))
         );
 
         pack();
@@ -337,13 +322,6 @@ public class InerfacciaGrafica extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_PunteggioActionPerformed
 
-    private void InstruzioniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InstruzioniActionPerformed
-        JOptionPane.showMessageDialog(this, 
-        "Benvenuto! \nPrendi la talpa (+10pt). \nSe sbagli perdi 5pt e 2 secondi.", 
-        "Istruzioni di Gioco", 
-        JOptionPane.INFORMATION_MESSAGE);
-    }//GEN-LAST:event_InstruzioniActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -370,7 +348,6 @@ public class InerfacciaGrafica extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Instruzioni;
     private javax.swing.JTextField Punteggio;
     private javax.swing.JTextField Tempo;
     private javax.swing.JButton jButton1;
