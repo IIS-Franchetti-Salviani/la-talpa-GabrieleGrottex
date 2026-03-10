@@ -73,15 +73,6 @@ public class InerfacciaGrafica extends javax.swing.JFrame {
             }
         }
     }
-
-    // Esempio di gestione click su una buca (ripetere per tutti i jButton)
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-        if(gestore.isInCorso()) {
-            gestore.colpisceBuca(0);
-            aggiornaLabels();
-            aggiornaBottoni();
-        }
-    }
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(InerfacciaGrafica.class.getName());
 
     /**
@@ -277,51 +268,65 @@ public class InerfacciaGrafica extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        gestore.colpisceBuca(0); // Indice 0 per il bottone 1
-        aggiornaLabels();
-        aggiornaBottoni();
+        if(gestore.isInCorso()) {
+            gestore.colpisceBuca(0);
+            aggiornaLabels();
+            aggiornaBottoni();
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        gestore.colpisceBuca(1); // Indice 0 per il bottone 1
-        aggiornaLabels();
-        aggiornaBottoni();
+        if(gestore.isInCorso()) {
+            gestore.colpisceBuca(1);
+            aggiornaLabels();
+            aggiornaBottoni();
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        gestore.colpisceBuca(2); // Indice 0 per il bottone 1
-        aggiornaLabels();
-        aggiornaBottoni();
+        if(gestore.isInCorso()) {
+            gestore.colpisceBuca(2);
+            aggiornaLabels();
+            aggiornaBottoni();
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        gestore.colpisceBuca(3); // Indice 0 per il bottone 1
-        aggiornaLabels();
-        aggiornaBottoni();
+        if(gestore.isInCorso()) {
+            gestore.colpisceBuca(3);
+            aggiornaLabels();
+            aggiornaBottoni();
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        gestore.colpisceBuca(4); // Indice 0 per il bottone 1
-        aggiornaLabels();
-        aggiornaBottoni();
+        if(gestore.isInCorso()) {
+            gestore.colpisceBuca(4);
+            aggiornaLabels();
+            aggiornaBottoni();
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        gestore.colpisceBuca(5); // Indice 0 per il bottone 1
+        gestore.colpisceBuca(5); 
         aggiornaLabels();
         aggiornaBottoni();
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        gestore.colpisceBuca(6); // Indice 0 per il bottone 1
-        aggiornaLabels();
-        aggiornaBottoni();
+        if(gestore.isInCorso()) {
+            gestore.colpisceBuca(6);
+            aggiornaLabels();
+            aggiornaBottoni();
+        }
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        gestore.colpisceBuca(7); // Indice 0 per il bottone 1
-        aggiornaLabels();
-        aggiornaBottoni();
+        if(gestore.isInCorso()) {
+            gestore.colpisceBuca(7);
+            aggiornaLabels();
+            aggiornaBottoni();
+        }
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void TempoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TempoActionPerformed
