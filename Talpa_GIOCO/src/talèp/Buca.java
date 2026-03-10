@@ -17,8 +17,12 @@ public class Buca {
         this.occupata = (t != null);
     }
 
-    public boolean isOccupata() { return occupata; }
-    public Talpa getTalpa() { return talpaContenuta; }
+    public boolean isOccupata() {
+        return occupata;
+    }
+    public Talpa getTalpa() {
+        return talpaContenuta;
+    }
     
     public void svuota() {
         talpaContenuta = null;

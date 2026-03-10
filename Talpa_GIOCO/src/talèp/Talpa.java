@@ -17,7 +17,11 @@ public class Talpa {
         this.durataVisibilita = durata;
     }
 
-    public int getPunti() { return punti; }
-    public int getDurata() { return durataVisibilita; }
+    public int getPunti() { 
+        return punti; 
+    }
+    public int getDurata() {
+        return durataVisibilita;
+    }
 }
 
