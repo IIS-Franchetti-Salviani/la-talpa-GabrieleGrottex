@@ -13,37 +13,33 @@ import java.awt.Color;
 public class InerfacciaGrafica extends javax.swing.JFrame {
     private GestoreGioco gestore;
     private JButton[] listaBottoni;
-    private Timer timerGioco;      // Gestisce il tempo (1 secondo)
-    private Timer timerMovimento;  // Gestisce la talpa (800ms)
+    private Timer timerGioco;      
+    private Timer timerMovimento;  
 
     public InerfacciaGrafica() {
-        initComponents(); // Questo è il metodo generato da NetBeans
+        initComponents(); // Questo deve rimanere, lo genera NetBeans
+        
         gestore = new GestoreGioco(8);
         
-        // Inizializzo l'array con i bottoni creati dal designer
+        // Assicurati che i nomi dei bottoni nel Designer siano questi:
         listaBottoni = new JButton[]{jButton1, jButton2, jButton3, jButton4, jButton5, jButton6, jButton7, jButton8};
         
-        // Configuro il Timer del Tempo
+        // Timer del conto alla rovescia
         timerGioco = new Timer(1000, e -> {
             gestore.decrementaTempo();
             aggiornaLabels();
             if (!gestore.isInCorso()) {
-                finisciPartita();
+                fermaTutto();
             }
         });
 
-        // Configuro il Timer del Movimento
+        // Timer del movimento talpa
         timerMovimento = new Timer(800, e -> {
             gestore.muoviTalpa();
             aggiornaGraficaBottoni();
         });
 
-        disabilitaBottoni();
-        aggiornaLabels();
-    }
-
-    // Metodo da collegare a un pulsante "START" nel designer
-    private void avviaGioco() {
+        // --- TRUCCO: FACCIAMO PARTIRE IL GIOCO SUBITO ---
         gestore.resettaGioco();
         timerGioco.start();
         timerMovimento.start();
@@ -51,19 +47,25 @@ public class InerfacciaGrafica extends javax.swing.JFrame {
         aggiornaLabels();
     }
 
-    private void finisciPartita() {
+    private void fermaTutto() {
         timerGioco.stop();
         timerMovimento.stop();
         gestore.svuotaTutteLeBuche();
         aggiornaGraficaBottoni();
         disabilitaBottoni();
-        JOptionPane.showMessageDialog(this, "PARTITA FINITA!\nPunteggio: " + gestore.getPunteggio());
+        JOptionPane.showMessageDialog(this, "TEMPO SCADUTO!\nPunteggio Finale: " + gestore.getPunteggio());
     }
 
     private void aggiornaLabels() {
+        // Controlla che Punteggio e Tempo siano i nomi corretti dei tuoi JTextField/JLabel
         Punteggio.setText("Punti: " + gestore.getPunteggio());
-        Tempo.setText(gestore.getTempoResiduo() + "s");
-        Tempo.setForeground(gestore.getTempoResiduo() <= 5 ? Color.RED : Color.BLACK);
+        Tempo.setText("Tempo: " + gestore.getTempoResiduo() + "s");
+        
+        if (gestore.getTempoResiduo() <= 5) {
+            Tempo.setForeground(Color.RED);
+        } else {
+            Tempo.setForeground(Color.BLACK);
+        }
     }
 
     private void aggiornaGraficaBottoni() {
@@ -73,12 +75,12 @@ public class InerfacciaGrafica extends javax.swing.JFrame {
                 listaBottoni[i].setBackground(Color.RED);
             } else {
                 listaBottoni[i].setText("Buca");
-                listaBottoni[i].setBackground(null);
+                listaBottoni[i].setBackground(null); // Torna al colore originale
             }
         }
     }
 
-    private void clickSuBuca(int indice) {
+    private void gestisciClick(int indice) {
         if (gestore.isInCorso()) {
             gestore.colpisceBuca(indice);
             aggiornaLabels();
@@ -268,65 +270,35 @@ public class InerfacciaGrafica extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(gestore.isInCorso()) {
-            gestore.colpisceBuca(0);
-            aggiornaLabels();
-            aggiornaBottoni();
-        }
+         gestisciClick(0);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if(gestore.isInCorso()) {
-            gestore.colpisceBuca(1);
-            aggiornaLabels();
-            aggiornaBottoni();
-        }
+        gestisciClick(1);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        if(gestore.isInCorso()) {
-            gestore.colpisceBuca(2);
-            aggiornaLabels();
-            aggiornaBottoni();
-        }
+        gestisciClick(2);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        if(gestore.isInCorso()) {
-            gestore.colpisceBuca(3);
-            aggiornaLabels();
-            aggiornaBottoni();
-        }
+        gestisciClick(3);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        if(gestore.isInCorso()) {
-            gestore.colpisceBuca(4);
-            aggiornaLabels();
-            aggiornaBottoni();
-        }
+        gestisciClick(4);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        gestore.colpisceBuca(5); 
-        aggiornaLabels();
-        aggiornaBottoni();
+        gestisciClick(5);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        if(gestore.isInCorso()) {
-            gestore.colpisceBuca(6);
-            aggiornaLabels();
-            aggiornaBottoni();
-        }
+        gestisciClick(6);
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        if(gestore.isInCorso()) {
-            gestore.colpisceBuca(7);
-            aggiornaLabels();
-            aggiornaBottoni();
-        }
+        gestisciClick(7);
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void TempoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TempoActionPerformed
