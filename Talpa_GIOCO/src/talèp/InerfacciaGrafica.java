@@ -17,14 +17,12 @@ public class InerfacciaGrafica extends javax.swing.JFrame {
     private Timer timerMovimento;  
 
     public InerfacciaGrafica() {
-        initComponents(); // Questo deve rimanere, lo genera NetBeans
+        initComponents(); 
         
         gestore = new GestoreGioco(8);
         
-        // Assicurati che i nomi dei bottoni nel Designer siano questi:
         listaBottoni = new JButton[]{jButton1, jButton2, jButton3, jButton4, jButton5, jButton6, jButton7, jButton8};
         
-        // Timer del conto alla rovescia
         timerGioco = new Timer(1000, e -> {
             gestore.decrementaTempo();
             aggiornaLabels();
@@ -33,13 +31,11 @@ public class InerfacciaGrafica extends javax.swing.JFrame {
             }
         });
 
-        // Timer del movimento talpa
         timerMovimento = new Timer(800, e -> {
             gestore.muoviTalpa();
             aggiornaGraficaBottoni();
         });
 
-        // --- TRUCCO: FACCIAMO PARTIRE IL GIOCO SUBITO ---
         gestore.resettaGioco();
         timerGioco.start();
         timerMovimento.start();
@@ -57,7 +53,7 @@ public class InerfacciaGrafica extends javax.swing.JFrame {
     }
 
     private void aggiornaLabels() {
-        // Controlla che Punteggio e Tempo siano i nomi corretti dei tuoi JTextField/JLabel
+        
         Punteggio.setText("Punti: " + gestore.getPunteggio());
         Tempo.setText("Tempo: " + gestore.getTempoResiduo() + "s");
         
@@ -75,7 +71,7 @@ public class InerfacciaGrafica extends javax.swing.JFrame {
                 listaBottoni[i].setBackground(Color.RED);
             } else {
                 listaBottoni[i].setText("Buca");
-                listaBottoni[i].setBackground(null); // Torna al colore originale
+                listaBottoni[i].setBackground(null); 
             }
         }
     }
