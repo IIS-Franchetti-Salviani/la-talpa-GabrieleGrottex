@@ -13,48 +13,61 @@ import java.awt.Color;
 public class InerfacciaGrafica extends javax.swing.JFrame {
     private GestoreGioco gestore;
     private JButton[] listaBottoni;
-    private JButton btnStart; 
+    private Timer timerGioco;      // Gestisce il tempo (1 secondo)
+    private Timer timerMovimento;  // Gestisce la talpa (800ms)
 
     public InerfacciaGrafica() {
-        initComponents();
+        initComponents(); // Questo è il metodo generato da NetBeans
         gestore = new GestoreGioco(8);
+        
+        // Inizializzo l'array con i bottoni creati dal designer
         listaBottoni = new JButton[]{jButton1, jButton2, jButton3, jButton4, jButton5, jButton6, jButton7, jButton8};
         
-        // Creazione manuale del tasto Start (visto che mancava nel tuo initComponents)
-        btnStart = new JButton("START");
-        btnStart.setBounds(300, 30, 100, 40);
-        btnStart.addActionListener(evt -> btnStartActionPerformed(evt));
-        this.add(btnStart);
-        
-        for(JButton b : listaBottoni) b.setEnabled(false);
+        // Configuro il Timer del Tempo
+        timerGioco = new Timer(1000, e -> {
+            gestore.decrementaTempo();
+            aggiornaLabels();
+            if (!gestore.isInCorso()) {
+                finisciPartita();
+            }
+        });
+
+        // Configuro il Timer del Movimento
+        timerMovimento = new Timer(800, e -> {
+            gestore.muoviTalpa();
+            aggiornaGraficaBottoni();
+        });
+
+        disabilitaBottoni();
         aggiornaLabels();
     }
 
-    private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {
+    // Metodo da collegare a un pulsante "START" nel designer
+    private void avviaGioco() {
         gestore.resettaGioco();
-        btnStart.setEnabled(false);
-        for(JButton b : listaBottoni) b.setEnabled(true);
-        
-        gestore.avviaTimer(this::aggiornaLabels, () -> {
-            aggiornaLabels();
-            for(JButton b : listaBottoni) b.setEnabled(false);
-            JOptionPane.showMessageDialog(this, "Fine! Punteggio finale: " + gestore.getPunteggio());
-            btnStart.setEnabled(true);
-            btnStart.setText("Riprova");
-        });
+        timerGioco.start();
+        timerMovimento.start();
+        abilitaBottoni();
+        aggiornaLabels();
+    }
 
-        gestore.avviaMovimentoTalpe(this::aggiornaBottoni);
+    private void finisciPartita() {
+        timerGioco.stop();
+        timerMovimento.stop();
+        gestore.svuotaTutteLeBuche();
+        aggiornaGraficaBottoni();
+        disabilitaBottoni();
+        JOptionPane.showMessageDialog(this, "PARTITA FINITA!\nPunteggio: " + gestore.getPunteggio());
     }
 
     private void aggiornaLabels() {
         Punteggio.setText("Punti: " + gestore.getPunteggio());
         Tempo.setText(gestore.getTempoResiduo() + "s");
-        if (gestore.getTempoResiduo() <= 5) Tempo.setForeground(Color.RED);
-        else Tempo.setForeground(Color.BLACK);
+        Tempo.setForeground(gestore.getTempoResiduo() <= 5 ? Color.RED : Color.BLACK);
     }
 
-    private void aggiornaBottoni() {
-        for (int i = 0; i < 8; i++) {
+    private void aggiornaGraficaBottoni() {
+        for (int i = 0; i < listaBottoni.length; i++) {
             if (gestore.getBuche().get(i).isOccupata()) {
                 listaBottoni[i].setText("TALPA!");
                 listaBottoni[i].setBackground(Color.RED);
@@ -65,13 +78,16 @@ public class InerfacciaGrafica extends javax.swing.JFrame {
         }
     }
 
-    private void gestisciClick(int indice) {
-        if(gestore.isInCorso()) {
+    private void clickSuBuca(int indice) {
+        if (gestore.isInCorso()) {
             gestore.colpisceBuca(indice);
             aggiornaLabels();
-            aggiornaBottoni();
+            aggiornaGraficaBottoni();
         }
     }
+
+    private void abilitaBottoni() { for(JButton b : listaBottoni) b.setEnabled(true); }
+    private void disabilitaBottoni() { for(JButton b : listaBottoni) b.setEnabled(false); }
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(InerfacciaGrafica.class.getName());
 
     /**
@@ -103,70 +119,70 @@ public class InerfacciaGrafica extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("jButton1");
+        jButton1.setText("BUCA");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("jButton2");
+        jButton2.setText("BUCA");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
-        jButton3.setText("jButton3");
+        jButton3.setText("BUCA");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
 
-        jButton4.setText("jButton4");
+        jButton4.setText("BUCA");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
             }
         });
 
-        jButton5.setText("jButton5");
+        jButton5.setText("BUCA");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
             }
         });
 
-        jButton6.setText("jButton6");
+        jButton6.setText("BUCA");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
             }
         });
 
-        jButton7.setText("jButton7");
+        jButton7.setText("BUCA");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
             }
         });
 
-        jButton8.setText("jButton8");
+        jButton8.setText("BUCA");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton8ActionPerformed(evt);
             }
         });
 
-        Tempo.setText("jTextField1");
+        Tempo.setText("0");
         Tempo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TempoActionPerformed(evt);
             }
         });
 
-        Punteggio.setText("jTextField2");
+        Punteggio.setText("0");
         Punteggio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 PunteggioActionPerformed(evt);
@@ -210,7 +226,7 @@ public class InerfacciaGrafica extends javax.swing.JFrame {
                 .addComponent(jButton1)
                 .addGap(223, 223, 223)
                 .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 237, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 246, Short.MAX_VALUE)
                 .addComponent(jButton3)
                 .addGap(92, 92, 92))
         );

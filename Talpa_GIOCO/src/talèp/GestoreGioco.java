@@ -20,14 +20,16 @@ public class GestoreGioco {
 
     public GestoreGioco(int numeroBuche) {
         buche = new ArrayList<>();
-        for (int i = 0; i < numeroBuche; i++) buche.add(new Buca());
+        for (int i = 0; i < numeroBuche; i++) {
+            buche.add(new Buca());
+        }
     }
 
     public void resettaGioco() {
         this.punteggio = 0;
         this.tempoResiduo = 30;
         this.gameRunning = true;
-        resettaBuche();
+        svuotaTutteLeBuche();
     }
 
     public void decrementaTempo() {
@@ -36,13 +38,14 @@ public class GestoreGioco {
     }
 
     public void muoviTalpa() {
-        resettaBuche();
+        svuotaTutteLeBuche();
         int index = rand.nextInt(buche.size());
         buche.get(index).setTalpa(new Talpa(10));
     }
 
     public int colpisceBuca(int indice) {
         if (!gameRunning) return 0;
+        
         Buca b = buche.get(indice);
         if (b.isOccupata()) {
             int p = b.getTalpa().getPunti();
@@ -56,19 +59,18 @@ public class GestoreGioco {
         }
     }
 
-    public void resettaBuche() { 
-        for (Buca b : buche){
-            b.svuota();
-        }
+    public void svuotaTutteLeBuche() {
+        for (Buca b : buche) b.svuota();
+    }
+
+    public boolean isInCorso() { 
+        return gameRunning && tempoResiduo > 0;
     }
     public int getPunteggio() { 
-        return punteggio; 
+        return punteggio;
     }
-    public int getTempoResiduo() {
-        return tempoResiduo; 
-    }
-    public boolean isInCorso() {
-        return gameRunning && tempoResiduo > 0;
+    public int getTempoResiduo() { 
+        return tempoResiduo;
     }
     public ArrayList<Buca> getBuche() {
         return buche; 
