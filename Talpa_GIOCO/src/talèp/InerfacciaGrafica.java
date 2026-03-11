@@ -13,35 +13,26 @@ import java.awt.Color;
 public class InerfacciaGrafica extends javax.swing.JFrame {
     private GestoreGioco gestore;
     private JButton[] listaBottoni;
-    private JButton btnStart; // Il nuovo tasto Start
+    private JButton btnStart; 
 
     public InerfacciaGrafica() {
         initComponents();
         gestore = new GestoreGioco(8);
         listaBottoni = new JButton[]{jButton1, jButton2, jButton3, jButton4, jButton5, jButton6, jButton7, jButton8};
         
-        // Configurazione iniziale bottoni
-        for(JButton b : listaBottoni) b.setEnabled(false);
+        // Creazione manuale del tasto Start (visto che mancava nel tuo initComponents)
+        btnStart = new JButton("START");
+        btnStart.setBounds(300, 30, 100, 40);
+        btnStart.addActionListener(evt -> btnStartActionPerformed(evt));
+        this.add(btnStart);
         
-        // Mostra subito le istruzioni
-        mostraIstruzioni();
+        for(JButton b : listaBottoni) b.setEnabled(false);
+        aggiornaLabels();
     }
 
-    private void mostraIstruzioni() {
-        JOptionPane.showMessageDialog(this, 
-            "REGOLE DEL GIOCO:\n" +
-            "1. Premi START per iniziare.\n" +
-            "2. Colpisci la TALPA (+10 punti).\n" +
-            "3. Click a vuoto: -5 punti e -2 secondi!\n" +
-            "4. Hai 30 secondi di tempo.", 
-            "Istruzioni", JOptionPane.INFORMATION_MESSAGE);
-    }
-
-    // Questo metodo va collegato al tasto Start (jButton9 o uno nuovo)
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {
         gestore.resettaGioco();
-        btnStart.setEnabled(false); // Disabilita start durante il gioco
-        
+        btnStart.setEnabled(false);
         for(JButton b : listaBottoni) b.setEnabled(true);
         
         gestore.avviaTimer(this::aggiornaLabels, () -> {
@@ -57,7 +48,7 @@ public class InerfacciaGrafica extends javax.swing.JFrame {
 
     private void aggiornaLabels() {
         Punteggio.setText("Punti: " + gestore.getPunteggio());
-        Tempo.setText("Tempo: " + gestore.getTempoResiduo() + "s");
+        Tempo.setText(gestore.getTempoResiduo() + "s");
         if (gestore.getTempoResiduo() <= 5) Tempo.setForeground(Color.RED);
         else Tempo.setForeground(Color.BLACK);
     }
@@ -71,6 +62,14 @@ public class InerfacciaGrafica extends javax.swing.JFrame {
                 listaBottoni[i].setText("Buca");
                 listaBottoni[i].setBackground(null);
             }
+        }
+    }
+
+    private void gestisciClick(int indice) {
+        if(gestore.isInCorso()) {
+            gestore.colpisceBuca(indice);
+            aggiornaLabels();
+            aggiornaBottoni();
         }
     }
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(InerfacciaGrafica.class.getName());

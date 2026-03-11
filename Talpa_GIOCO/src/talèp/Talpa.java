@@ -10,11 +10,12 @@ package talèp;
  */
 public class Talpa {
     private int punti;
-    public Talpa(int punti) { 
-        this.punti = punti; 
+
+    public Talpa(int punti) {
+        this.punti = punti;
     }
+
     public int getPunti() {
-        return punti; 
+        return punti;
     }
 }
-
